@@ -9,7 +9,7 @@ static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will
 static const int follow                    = 1;  /* 1 means follow windows when sent to another tag */
 
 static const int smartgaps                 = 0;  /* 1 means no outer gap when there is only one window */
-static const unsigned int borderpx         = 3;  /* border pixel of windows */
+static const unsigned int borderpx         = 0;  /* border pixel of windows */
 static const int monoclegaps               = 0;  /* 1 means outer gaps in monocle layout */
 static const unsigned int gappih           = 10; /* horiz inner gap between windows */
 static const unsigned int gappiv           = 10; /* vert inner gap between windows */
@@ -28,6 +28,14 @@ static const float fullscreen_bg[]         = {0.0f, 0.0f, 0.0f, 1.0f}; /* You ca
 
 /* logging */
 static int log_level = WLR_ERROR;
+
+/* Autostart */
+static const char *const autostart[] = {
+        "sh", "-c", "~/Scripts/images/wayland/select-random-wallpaper",
+        "sh", "-c", "headsetcontrol", "-l", "0",
+        NULL /* terminate */
+};
+
 
 static const Rule rules[] = {
 	/* app_id             title       tags mask     isfloating   monitor */
@@ -144,10 +152,11 @@ static const Key keys[] = {
     { MODKEY,                    XKB_KEY_F10,         spawn,            SHCMD("mpc volume +10"), },
     
     /* rofi widgets */
-    { MODKEY,                    XKB_KEY_w,           spawn,            SHCMD("~/Scripts/images/wallpaper-selector")},
+    { MODKEY,                    XKB_KEY_w,           spawn,            SHCMD("~/Scripts/images/wayland/wallpaper-selector")},
     { MODKEY,                    XKB_KEY_p,           spawn,            SHCMD("~/Scripts/rofi/powermenu")},
     { MODKEY,                    XKB_KEY_r,           spawn,            SHCMD("~/Scripts/rofi/mpd")},
 	{ MODKEY,                    XKB_KEY_d,           spawn,            {.v = rofi} },
+    { MODKEY,                    XKB_KEY_Print,            spawn,            SHCMD("flameshot gui") },
 
     /* programs*/
     { MODKEY,                    XKB_KEY_Return,      spawn,            {.v = termcmd} },
@@ -163,7 +172,9 @@ static const Key keys[] = {
 	{ MODKEY|WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT,    XKB_KEY_L,      incogaps,      {.i = -1 } },
 	{ MODKEY|WLR_MODIFIER_LOGO|WLR_MODIFIER_CTRL,     XKB_KEY_h,      incigaps,      {.i = +1 } },
 	{ MODKEY|WLR_MODIFIER_LOGO|WLR_MODIFIER_CTRL,     XKB_KEY_l,      incigaps,      {.i = -1 } },
-	{ MODKEY|WLR_MODIFIER_LOGO,  XKB_KEY_0,           togglegaps,       {0} },
+
+    /* gaps */
+    { MODKEY|WLR_MODIFIER_LOGO,  XKB_KEY_0,           togglegaps,       {0} },
 	{ MODKEY|WLR_MODIFIER_LOGO|WLR_MODIFIER_SHIFT,    XKB_KEY_parenright,defaultgaps,    {0} },
 	{ MODKEY,                    XKB_KEY_y,           incihgaps,        {.i = +1 } },
 	{ MODKEY,                    XKB_KEY_o,           incihgaps,        {.i = -1 } },
