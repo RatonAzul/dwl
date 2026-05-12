@@ -57,10 +57,10 @@ static const Layout layouts[] = {
  * WARNING: negative values other than (-1, -1) cause problems with Xwayland clients due to
  * https://gitlab.freedesktop.org/xorg/xserver/-/issues/899 */
 static const MonitorRule monrules[] = {
-   /* name        mfact  nmaster scale layout       rotate/reflect                x    y */
-    { "DP-3",     0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   0,   0},
-    { "HDMI-A-1", 0.55F, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   2560,0},
-    { NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL, -1,  -1 },
+   /* name        mfact  nmaster scale layout       rotate/reflect                x    y  resx   resy        rate      mode  adaptive*/
+    { "DP-3",     0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   0,   0,   2560, 1440,     170.0f,    5,      0},
+    { "HDMI-A-1", 0.55F, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,   2560,0,   0,     0,     74.973000f,    1,      1},
+    { NULL,       0.55f, 1,      1,    &layouts[0], WL_OUTPUT_TRANSFORM_NORMAL,  -1,   -1  },
 };
 
 /* keyboard */
@@ -156,13 +156,13 @@ static const Key keys[] = {
     { MODKEY,                    XKB_KEY_p,           spawn,            SHCMD("~/Scripts/rofi/powermenu")},
     { MODKEY,                    XKB_KEY_r,           spawn,            SHCMD("~/Scripts/rofi/mpd")},
 	{ MODKEY,                    XKB_KEY_d,           spawn,            {.v = rofi} },
-    { MODKEY,                    XKB_KEY_Print,            spawn,            SHCMD("flameshot gui") },
 
     /* programs*/
     { MODKEY,                    XKB_KEY_Return,      spawn,            {.v = termcmd} },
     { MODKEY,                    XKB_KEY_e,           spawn,            SHCMD("foot yazi"), },
     { MODKEY,                    XKB_KEY_m,           spawn,            SHCMD("foot rmpc"), },
-   
+     { 0,                    XKB_KEY_Print,            spawn,            SHCMD("flameshot gui") },
+  
     /* client controls */
     { MODKEY,                    XKB_KEY_h,           setmfact,         {.f = -0.05f} },
 	{ MODKEY,                    XKB_KEY_l,           setmfact,         {.f = +0.05f} },
