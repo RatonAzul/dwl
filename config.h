@@ -9,7 +9,7 @@ static const int bypass_surface_visibility = 0;  /* 1 means idle inhibitors will
 static const int follow                    = 1;  /* 1 means follow windows when sent to another tag */
 
 static const int smartgaps                 = 0;  /* 1 means no outer gap when there is only one window */
-static const unsigned int borderpx         = 0;  /* border pixel of windows */
+static const unsigned int borderpx         = 3;  /* border pixel of windows */
 static const int monoclegaps               = 0;  /* 1 means outer gaps in monocle layout */
 static const unsigned int gappih           = 10; /* horiz inner gap between windows */
 static const unsigned int gappiv           = 10; /* vert inner gap between windows */
@@ -41,7 +41,10 @@ static const char *const autostart[] = {
 
 static const Rule rules[] = {
 	/* app_id             title       tags mask     isfloating    alphaFocus alphaUnfocus   monitor */
-    { "foot",             NULL,        0,               0,           0.95,        0.8,        -1},
+    { "foot",             NULL,        0,               0,           0.95,        0.9,        -1},
+    { "fuzzel",           NULL,        0,               0,           0.95,        0.9,        -1},
+    { "rofi",             NULL,        0,               0,           0.95,        0.9,        -1},
+
 };
 
 /* layout(s) */
@@ -145,9 +148,9 @@ static const Key keys[] = {
     { 0,                         XKB_KEY_XF86AudioLowerVolume, spawn,   {.v = volumeDown} },
 
     /* mpd controls */
-    { MODKEY,                    XKB_KEY_F6,          spawn,            SHCMD("playerctl play-pause"), },
-    { MODKEY,                    XKB_KEY_F7,          spawn,            SHCMD("playerctl previous"), },
-    { MODKEY,                    XKB_KEY_F8,          spawn,            SHCMD("playerctl next"), },
+    { MODKEY,                    XKB_KEY_F6,          spawn,            SHCMD("playerctl play-pause; pkill -RTMIN+2 someblocks"), },
+    { MODKEY,                    XKB_KEY_F7,          spawn,            SHCMD("playerctl previous; pkill -RTMIN+2 someblocks"), },
+    { MODKEY,                    XKB_KEY_F8,          spawn,            SHCMD("playerctl next; pkill -RTMIN+2 someblocks"), },
     { MODKEY,                    XKB_KEY_F9,          spawn,            SHCMD("mpc volume -10"), },
     { MODKEY,                    XKB_KEY_F10,         spawn,            SHCMD("mpc volume +10"), },
     
@@ -161,7 +164,8 @@ static const Key keys[] = {
     { MODKEY,                    XKB_KEY_Return,      spawn,            {.v = termcmd} },
     { MODKEY,                    XKB_KEY_e,           spawn,            SHCMD("foot yazi"), },
     { MODKEY,                    XKB_KEY_m,           spawn,            SHCMD("foot rmpc"), },
-     { 0,                    XKB_KEY_Print,            spawn,            SHCMD("flameshot gui") },
+    { 0,                         XKB_KEY_Print,       spawn,            SHCMD("~/Scripts/images/wayland/screenshot") },
+    { MODKEY,                    XKB_KEY_v,           spawn,            SHCMD("foot nvim"), },
   
     /* client controls */
     { MODKEY,                    XKB_KEY_h,           setmfact,         {.f = -0.05f} },
